@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from django.contrib.auth import login
 
 def home(request):
     return render(request, 'ecr/home.html')
@@ -15,8 +16,14 @@ def signupuser(request):
             try:
                 user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
                 user.save()
+                login(request, user)
+                return redirect('allruns')
             except IntegrityError:
                 return render(request, 'ecr/signupuser.html', {'form':UserCreationForm(), 'error':'That username is already taken.  Please make another selection.'})
         else:
             return render(request, 'ecr/signupuser.html', {'form':UserCreationForm(), 'error':'Passwords did not match'})
 
+# Runs
+
+def allruns(request):
+    return render(request, 'ecr/allruns.html')
