@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
+from .forms import CreateRunForm
 
 def home(request):
     return render(request, 'ecr/home.html')
@@ -10,7 +11,7 @@ def home(request):
 # Auth
 def signupuser(request):
     if request.method == 'GET':
-        return render(request, 'ecr/signupuser.html', {'form':UserCreationForm})
+        return render(request, 'ecr/signupuser.html', {'form':UserCreationForm()})
     else:
         if request.POST['password1'] == request.POST['password2']:
             try:
@@ -44,3 +45,9 @@ def logoutuser(request):
 
 def allruns(request):
     return render(request, 'ecr/allruns.html')
+
+def createrun(request):
+    if request.method == 'GET':
+        return render(request, 'ecr/createrun.html', {'form':CreateRunForm()})
+    else:
+        pass
