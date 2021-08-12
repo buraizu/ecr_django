@@ -48,6 +48,10 @@ def allruns(request):
 
 def createrun(request):
     if request.method == 'GET':
-        return render(request, 'ecr/createrun.html', {'form':CreateRunForm()})
+        return render(request, 'ecr/createrun.html', {'form':CreateRunForm(), 'error':'Invalid data, please check your inputs and try again.'})
     else:
-        pass
+        form = CreateRunForm(request.POST)
+        newrun = form.save(commit=False)
+        newrun.user = request.user
+        newrun.save()
+        return redirect('allruns')
