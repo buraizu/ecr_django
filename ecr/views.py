@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from .forms import CreateRunForm
+from .models import Run
 
 def home(request):
     return render(request, 'ecr/home.html')
@@ -44,7 +45,8 @@ def logoutuser(request):
 # Runs
 
 def allruns(request):
-    return render(request, 'ecr/allruns.html')
+    runs = Run.objects.filter(user=request.user)
+    return render(request, 'ecr/allruns.html', {'runs':runs})
 
 def createrun(request):
     if request.method == 'GET':

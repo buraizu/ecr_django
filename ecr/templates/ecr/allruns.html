@@ -3,4 +3,14 @@
 
 {% extends "ecr/base.html" %}
 
-{% block content %}see all your runs here{% endblock %}
+{% block content %}
+
+see all your runs here
+
+<ul>
+    {% for run in runs %}
+    <li>{{ run.course }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
