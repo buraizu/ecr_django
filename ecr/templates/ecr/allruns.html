@@ -10,6 +10,9 @@ see all your runs here
 <ul>
     {% for run in runs %}
     <li>{{ run.course }}</li>
+    {% if run.review %}
+    {{ run.review }}
+    {% endif %}
     {% endfor %}
 </ul>
 
