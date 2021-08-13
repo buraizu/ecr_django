@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
-from .forms import CreateRunForm
+from .forms import RunForm
 from .models import Run
 
 def home(request):
@@ -50,10 +50,23 @@ def allruns(request):
 
 def createrun(request):
     if request.method == 'GET':
-        return render(request, 'ecr/createrun.html', {'form':CreateRunForm(), 'error':'Invalid data, please check your inputs and try again.'})
+        return render(request, 'ecr/createrun.html', {'form':RunForm(), 'error':'Invalid data, please check your inputs and try again.'})
     else:
         form = CreateRunForm(request.POST)
         newrun = form.save(commit=False)
         newrun.user = request.user
         newrun.save()
         return redirect('allruns')
+
+def viewrun(request, run_pk):
+    run = get_object_or_404(Run, pk=run_pk)
+    if request.method == 'GET':
+        form = RunForm(instance=run)
+        return render(request, 'ecr/viewrun.html', {'run':run, 'form':form})
+    else:
+        try:
+            form = RunForm(request.POST, instance=run)
+            form.save()
+            return redirect('allruns')
+        except ValueError:
+            return render(request, 'ecr/viewrun.html', {'run':run, 'form':form, 'error':'Invalid data, please check your inputs and try again.'})

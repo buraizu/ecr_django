@@ -9,7 +9,9 @@ see all your runs here
 
 <ul>
     {% for run in runs %}
-    <li>{{ run.course }}</li>
+    <a href="{% url 'viewrun' run.id %}">
+        <li>{{ run.course }}</li>
+    </a>
     {% if run.review %}
     {{ run.review }}
     {% endif %}
