@@ -29,6 +29,7 @@ urlpatterns = [
     path('runs/', views.allruns, name='allruns'),
     path('createrun/', views.createrun, name='createrun'),
     path('run/<int:run_pk>', views.viewrun, name='viewrun'),
+    path('run/<int:run_pk>/delete', views.deleterun, name='deleterun'),
 
     path('home/', views.home, name='home'),
     path('', views.home, name='home'),

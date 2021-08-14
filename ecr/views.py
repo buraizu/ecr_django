@@ -52,7 +52,7 @@ def createrun(request):
     if request.method == 'GET':
         return render(request, 'ecr/createrun.html', {'form':RunForm(), 'error':'Invalid data, please check your inputs and try again.'})
     else:
-        form = CreateRunForm(request.POST)
+        form = RunForm(request.POST)
         newrun = form.save(commit=False)
         newrun.user = request.user
         newrun.save()
@@ -70,3 +70,9 @@ def viewrun(request, run_pk):
             return redirect('allruns')
         except ValueError:
             return render(request, 'ecr/viewrun.html', {'run':run, 'form':form, 'error':'Invalid data, please check your inputs and try again.'})
+
+def deleterun(request, run_pk):
+    run = get_object_or_404(Run, pk=run_pk, user=request.user)
+    if request.method == 'POST':
+        run.delete()
+        return redirect('allruns')
