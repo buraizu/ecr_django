@@ -59,7 +59,7 @@ def createrun(request):
         return redirect('allruns')
 
 def viewrun(request, run_pk):
-    run = get_object_or_404(Run, pk=run_pk)
+    run = get_object_or_404(Run, pk=run_pk, user=request.user)
     if request.method == 'GET':
         form = RunForm(instance=run)
         return render(request, 'ecr/viewrun.html', {'run':run, 'form':form})
