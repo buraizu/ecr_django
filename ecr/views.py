@@ -76,3 +76,8 @@ def deleterun(request, run_pk):
     if request.method == 'POST':
         run.delete()
         return redirect('allruns')
+
+# Events
+
+def allevents(request):
+    return render(request, 'ecr/allevents.html')

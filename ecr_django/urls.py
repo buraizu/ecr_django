@@ -31,6 +31,9 @@ urlpatterns = [
     path('run/<int:run_pk>', views.viewrun, name='viewrun'),
     path('run/<int:run_pk>/delete', views.deleterun, name='deleterun'),
 
+    # Events
+    path('events/', views.allevents, name='allevents'),
+
     path('home/', views.home, name='home'),
     path('', views.home, name='home'),
 ]
