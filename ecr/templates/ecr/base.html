@@ -3,6 +3,10 @@
 
 Logged in as {{ user.username }}
 
+<a href="{% url 'allruns' %}">Runs</a>
+<a href="{% url 'createrun' %}">Log a New Run</a>
+<a href="{% url 'home' %}">Home</a>
+
 <form action="{% url 'logoutuser' %}" method="POST">
     {% csrf_token %}
     <button type="submit">Log Out</button>
